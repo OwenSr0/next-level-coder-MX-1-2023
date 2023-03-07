@@ -5,8 +5,9 @@ from dino_runner.utils.constants import RUNNING, DUCKING, JUMPING
 class Dinosaur(Sprite):
     POS_X = 80
     POS_Y = 310
-    POS_Y_DUCKING = 340
+    POS_Y_DUCKING = 345
     JUMP_VEL = 10
+    JUMP_MAX = 400
 
     def __init__(self):
         self.image = RUNNING[0]
@@ -18,6 +19,7 @@ class Dinosaur(Sprite):
         self.dino_duck = False
         self.dino_jump = False
         self.jump_vel = self.JUMP_VEL
+        self.press_time = 0
 
     def update(self, user_input):
         
@@ -32,15 +34,21 @@ class Dinosaur(Sprite):
             self.dino_run = False
             self.dino_duck = True
             self.dino_jump = False
+            self.press_time = 0
+
         elif user_input[pygame.K_UP] and not self.dino_jump:
             self.dino_run = False
             self.dino_duck = False
             self.dino_jump = True
+            if self.press_time < 20:
+                self.press_time += 1
+
         elif not self.dino_jump:
             self.dino_run = True
             self.dino_duck = False
             self.dino_jump = False
-        
+            self.press_time = 0
+
         if self.step_index >= 10:
             self.step_index = 0
         
@@ -67,9 +75,15 @@ class Dinosaur(Sprite):
 
     def jump(self):
         self.image = JUMPING
+
+        if self.dino_rect.y > self.JUMP_MAX and self.press_time: 
+            pass
+            
         if self.dino_jump:
             self.dino_rect.y -= self.jump_vel * 4 # Salto
             self.jump_vel -= 1 # Salto, cuando llega a negativo, baja
+
+
         if self.jump_vel < -self.JUMP_VEL: # Cuando llega a JUMP_VEL en negativo, este se detiene
             self.dino_rect.y = self.POS_Y
             self.dino_jump = False
