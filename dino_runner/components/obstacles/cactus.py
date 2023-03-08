@@ -8,3 +8,7 @@ class Cactus(Obstacle):
         super().__init__(image, self.type)
         self.rect.y = 325
         
+    def update(self, game_speed, obstacles):
+        self.rect.x -= game_speed
+        if self.rect.x < -100:
+            obstacles.pop()
