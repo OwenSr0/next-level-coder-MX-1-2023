@@ -7,9 +7,13 @@ SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
 FPS = 30
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
-FONT_ARIAL = pygame.font.match_font('arial')
+FONT_ARIAL = pygame.font.match_font('arial', bold=True)
+FONT_TEST = pygame.font.match_font('bitstreamverasans')
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "DinoWallpaper.png"))
+
+DINO_START = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoStart.png"))
+DINO_LOSE = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDead.png"))
 
 RUNNING = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1.png")),
@@ -66,8 +70,14 @@ SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
+BG_NIGHT = pygame.image.load(os.path.join(IMG_DIR, 'Other/background_night.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
+
+GAME_OVER = pygame.image.load(os.path.join(IMG_DIR, 'Other/GameOver.png'))
+RESET = pygame.image.load(os.path.join(IMG_DIR, 'Other/Reset.png'))
+
+
 
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"

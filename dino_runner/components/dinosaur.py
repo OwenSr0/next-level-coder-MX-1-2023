@@ -2,6 +2,7 @@ import pygame
 
 from pygame.sprite import Sprite
 from dino_runner.utils.constants import (
+    DINO_START,
     RUNNING, 
     DUCKING, 
     JUMPING,
@@ -10,6 +11,7 @@ from dino_runner.utils.constants import (
     RUNNING_SHIELD,
     DUCKING_SHIELD,
     JUMPING_SHIELD,
+    DINO_LOSE
     )
 
 class Dinosaur(Sprite):
@@ -23,13 +25,12 @@ class Dinosaur(Sprite):
         self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
         self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
         self.type = DEFAULT_TYPE
-
-        self.image = self.run_img[self.type][0]
+        self.image = DINO_START
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.POS_X
         self.dino_rect.y = self.POS_Y
         self.step_index = 0
-        self.dino_run = True
+        self.dino_run = False
         self.dino_duck = False
         self.dino_jump = False
         self.jump_vel = self.JUMP_VEL
@@ -40,7 +41,7 @@ class Dinosaur(Sprite):
         self.shield = False
         self.shield_time_up = False
 
-    def update(self, user_input):
+    def update(self, user_input, playing):
         
         if self.dino_jump:
             self.jump()
@@ -49,23 +50,26 @@ class Dinosaur(Sprite):
         if self.dino_run:
             self.run()
 
-        if user_input[pygame.K_DOWN] and not self.dino_jump:
+        if user_input[pygame.K_DOWN] and playing == 'playing' and not self.dino_jump:
             self.dino_run = False
             self.dino_duck = True
             self.dino_jump = False
 
-        elif user_input[pygame.K_UP] and not self.dino_jump:
+        elif user_input[pygame.K_UP] or user_input[pygame.K_SPACE] and not self.dino_jump:
             self.dino_run = False
             self.dino_duck = False
             self.dino_jump = True
 
-        elif not self.dino_jump:
+        elif not self.dino_jump and playing == 'playing' :
             self.dino_run = True
             self.dino_duck = False
             self.dino_jump = False
 
         if self.step_index >= 10:
             self.step_index = 0
+        
+        if playing == 'lose':
+            self.image = DINO_LOSE
         
             
 

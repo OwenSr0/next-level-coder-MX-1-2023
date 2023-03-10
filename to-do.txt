@@ -1,0 +1,7 @@
+pantalla de inicio // pantalla final boton de repetir
+cambiar de dia y noche cada 1000
+power ups // time up de power ups
+
+cambiar imagen de dinosaurio
+agregar imagen y replay
+logica de volver a jugar

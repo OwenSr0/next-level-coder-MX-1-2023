@@ -7,7 +7,7 @@ class PowerUpManager:
     def __init__(self):
         self.power_ups = []
         self.points = 0
-        self.when_appears = 0
+        self.when_appears = 100
         self.options_numbers = list(range(1,10))
 
     def generate_power_ups(self, points):
@@ -32,10 +32,13 @@ class PowerUpManager:
                 start_time = pygame.time.get_ticks()
                 time_random = random.randrange(5, 8)
                 player.shield_time_up = start_time + (time_random * 1000)
-
-
                 self.power_ups.remove(power_up)
+
 
     def draw(self, screen):
         for power_up in self.power_ups:
             power_up.draw(screen)
+
+    def remove(self):
+        for power_up in self.power_ups:
+            self.power_ups.remove(power_up)

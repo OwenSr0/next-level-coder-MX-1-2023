@@ -17,3 +17,6 @@ class HeartManager:
             heart = Heart(x_position, y_position)
             heart.draw(screen)
             x_position += 30
+
+    def reset_lives(self):
+        self.heart_count = LIVES
