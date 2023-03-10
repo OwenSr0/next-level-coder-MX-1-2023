@@ -41,7 +41,7 @@ class Game:
 
         self.home = True
         self.lose = False
-        self.night = 1
+        self.night = 0
 
         self.score = '0000'
         self.high_score = '0000'
@@ -50,6 +50,8 @@ class Game:
         self.points += 1
         if self.points % 100 == 0:
             self.game_speed += 1
+        if self.points % 1000 == 0:
+            self.night += 1
         #
         score = int(self.points)
         if self.points < 10:
@@ -127,20 +129,25 @@ class Game:
     def draw_background(self):
         image_width1 = BG_NIGHT.get_width()
         image_width = BG.get_width()
-        #self.screen.blit(BG_NIGHT, (self.x_pos_bg, 0))
-        #self.screen.blit(BG_NIGHT, (image_width1 + self.x_pos_bg, + 0))
+        if self.night % 2:
+            self.screen.blit(BG_NIGHT, (self.x_pos_bg, 0))
+            self.screen.blit(BG_NIGHT, (image_width1 + self.x_pos_bg, + 0))
 
         self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
         self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
         if self.x_pos_bg <= -image_width:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
-            #self.screen.blit(BG_NIGHT, (image_width1 + self.x_pos_bg, + 0))
+            if self.night % 2:
+                self.screen.blit(BG_NIGHT, (image_width1 + self.x_pos_bg, + 0))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
     
     def draw_score(self):
         font = pygame.font.Font(FONT_ARIAL, 30)
-        surface = font.render('HI  '+ self.high_score + '  ' + self.score, True, (0, 0, 0))
+        if self.night % 2:
+            surface = font.render('HI  '+ self.high_score + '  ' + self.score, True, (255, 255, 255))
+        else:
+            surface = font.render('HI  '+ self.high_score + '  ' + self.score, True, (0, 0, 0))
         rect = surface.get_rect()
         rect.x = 900
         rect.y = 10
